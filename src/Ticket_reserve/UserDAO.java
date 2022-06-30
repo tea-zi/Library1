@@ -5,30 +5,31 @@ import java.util.Scanner;
 public class UserDAO {
 	Scanner scan = new Scanner(System.in);
 	User userList[] = new User[100];
+	String log = "";
 	int userCount = 0;
 
 	boolean login() {
-
-		boolean log = false;
-
+		boolean check = false;
 		System.out.print("아이디 입력 : ");
 		String id = scan.next();
 		System.out.print("비밀번호 입력 : ");
 		int pw = scan.nextInt();
+		// log check
 		log = logincheck(id, pw);
-
-		return log;
-
-	}
-
-	boolean logincheck(String id, int pw) {
-		boolean check = false;
-		for (int i = 0; i < userCount; i++) {
-			if (id.equals(userList[i].id) && pw == userList[i].pw) {
-				check = true;
-			}
+		if (log.equals("")) {
+			check = true;
 		}
 		return check;
+	}
+
+	String logincheck(String id, int pw) {
+		String log = "";
+		for (int i = 0; i < userCount; i++) {
+			if (id.equals(userList[i].id) && pw == userList[i].pw) {
+				log = userList[i].id;
+			}
+		}
+		return log;
 	}
 
 	void join() {

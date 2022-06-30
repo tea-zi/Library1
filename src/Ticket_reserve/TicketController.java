@@ -17,7 +17,7 @@ public class TicketController {
 					menu();
 				}
 			} else if (sel == 2) {
-
+				ud.join();
 			} else if (sel == 0) {
 				break;
 			}
@@ -32,7 +32,7 @@ public class TicketController {
 			int sel = scan.nextInt();
 
 			if (sel == 1) {
-
+				sd.ticketing(ud.log);
 			} else if (sel == 2) {
 
 			} else if (sel == 3) {
