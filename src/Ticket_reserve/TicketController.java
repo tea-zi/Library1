@@ -22,7 +22,10 @@ public class TicketController {
 			} else if (sel == 0) {
 				break;
 			} else if (sel == 3) {
-
+				ud.load();
+				sd.load();
+			} else if (sel == 4) {
+				System.out.println(ud.userCount);
 			}
 		}
 	}

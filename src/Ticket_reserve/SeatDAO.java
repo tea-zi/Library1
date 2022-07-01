@@ -1,12 +1,14 @@
 package Ticket_reserve;
 
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 public class SeatDAO {
 	Scanner scan = new Scanner(System.in);
 	Seat seatList[] = new Seat[10];
-	int seatCount = 0;
 	int size = seatList.length;
+	String fileName = "src/Ticket_reserve/seatData.txt";
 
 	void init() {
 		for (int i = 0; i < size; i++) {
@@ -50,6 +52,7 @@ public class SeatDAO {
 		} else {
 			System.out.println("예매불가");
 		}
+		save();
 
 	}
 
@@ -73,6 +76,7 @@ public class SeatDAO {
 		}
 		select(sel);
 		printSeat();
+		save();
 	}
 
 	void select(int[] sel) {
@@ -97,6 +101,63 @@ public class SeatDAO {
 	void confirmation() {
 		for (int i = 0; i < seatList.length; i++) {
 			System.out.println("[" + seatList[i].number + " | " + seatList[i].userId + "]");
+		}
+
+	}
+
+	void save() {
+		String data = getData();
+		try {
+			FileWriter fw = new FileWriter(fileName);
+			fw.write(data);
+			fw.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	String getData() {
+		String data = "";
+		for (int i = 0; i < seatList.length; i++) {
+			data += seatList[i].number;
+			data += ",";
+			data += seatList[i].userId;
+			data += ",";
+			data += seatList[i].check;
+			data += "\n";
+		}
+		System.out.println(data);
+		data = data.substring(0, data.length() - 1);
+		return data;
+	}
+
+	void load() {
+		String data = "";
+		try {
+			FileReader fr = new FileReader(fileName);
+			while (true) {
+				int read = fr.read();
+				if (read != -1) {
+					data += (char) read;
+				} else {
+					break;
+				}
+			}
+			fr.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+		String token[] = data.split("\n");
+		for (int i = 0; i < size; i++) {
+			String[] token2 = token[i].split(",");
+			seatList[i] = new Seat();
+			seatList[i].number = Integer.parseInt(token2[0]);
+			seatList[i].userId = token2[1];
+			seatList[i].check = Boolean.parseBoolean(token2[2]);
+
 		}
 	}
 }
